@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: ecommerce-app
-        image: parte15/ecommerce-flask-app:latest
+        image: parte15/ecommerce-flask-app:build-3
         ports:
         - containerPort: 5000
