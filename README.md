@@ -1,23 +1,26 @@
 # eCommerce Multibranch GitOps Deployment with ArgoCD
 
 ##  Project Overview
-This project establishes a production-grade GitOps CI/CD pipeline to automate the delivery of a Python Flask-based eCommerce application. By utilizing Jenkins for Continuous Integration and ArgoCD for Continuous Deployment, the architecture ensures seamless, zero-downtime feature rollouts directly to an Amazon EKS cluster[cite: 1, 2]. 
+This project establishes a production-grade GitOps CI/CD pipeline to automate the delivery of a Python Flask-based eCommerce application. By utilizing Jenkins for Continuous Integration and ArgoCD for Continuous Deployment, the architecture ensures seamless, zero-downtime feature rollouts directly to an Amazon EKS cluster. 
 
-> **[PLACEHOLDER: Video – Full video walkthrough demonstrating the live V3 application rollout, Jenkins CI pipeline execution, ArgoCD synchronization, and Grafana cluster observability]**
+
+
+https://github.com/user-attachments/assets/94b63c3f-5bab-4298-98a8-49e98fadb4cc
+> **Video – Full video walkthrough demonstrating the live V3 application rollout, Jenkins CI pipeline execution, ArgoCD synchronization, and Grafana cluster observability**
 
 ## Tech Stack
-* **Application Layer:** Python 3, Flask (`app.py`)[cite: 2]
-* **Infrastructure as Code (IaC):** Terraform (AWS EKS, EC2 provisioning)[cite: 2]
-* **Containerization:** Docker, Docker Hub[cite: 1, 2]
-* **Continuous Integration (CI):** Jenkins (Multibranch Pipeline)[cite: 1, 2]
-* **GitOps / CD:** ArgoCD[cite: 1, 2]
+* **Application Layer:** Python 3, Flask (`app.py`)   
+* **Infrastructure as Code (IaC):** Terraform (AWS EKS, EC2 provisioning)   
+* **Containerization:** Docker, Docker Hub   
+* **Continuous Integration (CI):** Jenkins (Multibranch Pipeline)   
+* **GitOps / CD:** ArgoCD   
 * **Container Orchestration:** Amazon Elastic Kubernetes Service (EKS)
 * **Observability:** Prometheus & Grafana (deployed via Helm)
 
 ## Table of Contents
 
 - [Prerequisites and Dependencies](#prerequisites-and-dependencies)
-- [Architecture & GitOps Workflow](#architecture-or-system-design)
+- [Architecture and GitOps Workflow](#architecture-and-gitops-workflow)
 - [Core Features and Functionality](#core-features-and-functionality)
 - [Installation and Setup](#installation-and-setup)
 - [Configuration Options](#configuration-options)
@@ -42,25 +45,25 @@ Before deploying this pipeline, ensure the following tools and accounts are conf
 ##  Architecture & GitOps Workflow
 1. **Development:** Developers build new features in isolated branches (e.g., `featA`, `featB`) and raise a Pull Request against the `main` branch.
 2. **Continuous Integration:** Upon merging the PR, Jenkins triggers the `Jenkinsfile`. It builds a new Docker image, pushes it to the registry, and programmatically updates the image tag inside `k8s/deployment.yaml`.
-3. **Continuous Deployment:** ArgoCD continuously monitors the `k8s/` directory exclusively on the `main` branch[cite: 1, 2]. Upon detecting the updated deployment manifest, ArgoCD automatically syncs the EKS cluster to the desired state, rolling out the new pods.
+3. **Continuous Deployment:** ArgoCD continuously monitors the `k8s/` directory exclusively on the `main` branch   . Upon detecting the updated deployment manifest, ArgoCD automatically syncs the EKS cluster to the desired state, rolling out the new pods.
 
 ##  Repository Structure
 ```text
 ecommerce-gitops-pipeline/
 │
-├── app.py                  # Core Flask application[cite: 2]
-├── requirements.txt        # Python dependencies[cite: 2]
-├── Dockerfile              # Container build instructions[cite: 2]
-├── Jenkinsfile             # CI pipeline configuration[cite: 2]
+├── app.py                  # Core Flask application   
+├── requirements.txt        # Python dependencies   
+├── Dockerfile              # Container build instructions   
+├── Jenkinsfile             # CI pipeline configuration   
 │
-├── Tf-script/              # Terraform IaC configurations[cite: 2]
-│   ├── Main.tf            [cite: 2]
-│   ├── provider.tf        [cite: 2]
-│   └── resource.sh        [cite: 2]
+├── Tf-script/              # Terraform IaC configurations   
+│   ├── Main.tf               
+│   ├── provider.tf           
+│   └── resource.sh           
 │
-├── k8s/                    # Kubernetes manifests (Monitored by ArgoCD)[cite: 1, 2]
-│   ├── deployment.yaml    [cite: 2]
-│   └── service.yaml       [cite: 2]
+├── k8s/                    # Kubernetes manifests (Monitored by ArgoCD)   
+│   ├── deployment.yaml       
+│   └── service.yaml          
 │
 └── argocd/                 # ArgoCD application definitions
     └── application.yaml
@@ -73,15 +76,23 @@ ecommerce-gitops-pipeline/
 
 The pipeline strictly isolates environments. Code updates trigger automated builds that update container registries and deployment files programmatically, removing human error from the release process.
 
-> **[PLACEHOLDER: Screenshot – Jenkins pipeline stage view showing successful Declarative Checkout, Build and Push Image, and Update K8s Manifest stages]**
+<img width="1785" height="1073" alt="Screenshot 2026-08-07 181836" src="https://github.com/user-attachments/assets/3f6fb347-1c76-4b79-a094-a9a66a335a72" />
 
-> **[PLACEHOLDER: Screenshot – GitHub commit history showing the automated "Updated image to build-x" commit generated by Jenkins]**
+> **Jenkins pipeline stage view showing successful Declarative Checkout, Build and Push Image, and Update K8s Manifest stages**
+
+<br>
+
+<img width="1876" height="1037" alt="Screenshot 2026-08-07 180640" src="https://github.com/user-attachments/assets/0ea54d0d-0882-490e-9ad5-906f2b500015" />
+
+> **GitHub commit history showing the automated "Updated image to build-x" commit generated by Jenkins**
 
 ### 2. Automated GitOps Rollouts
 
 Deployment state is maintained exclusively in Git. ArgoCD enforces this state, terminating outdated pods and spinning up new ReplicaSets automatically.
 
-> **[PLACEHOLDER: Screenshot – ArgoCD UI application dashboard showing the application as Healthy and Synced with the active ReplicaSets and Pods]**
+<img width="1906" height="1078" alt="Screenshot 2026-08-07 182121" src="https://github.com/user-attachments/assets/700e384b-2990-4405-976b-87a42041516e" />
+
+> **ArgoCD UI application dashboard showing the application as Healthy and Synced with the active ReplicaSets and Pods**
 
 ### 3. Application Versioning (eCommerce App)
 
@@ -89,19 +100,27 @@ Deployment state is maintained exclusively in Git. ArgoCD enforces this state, t
 - **V2 (Feature A):** Introduction of the "Enhanced Shopping Experience" block with Real-time Stock and Save for Later UI.
 - **V3 (Feature B):** Addition of live order tracking simulations, user account creation, and interactive customer reviews.
 
-> **[PLACEHOLDER: Screenshot – The V1 iteration of the ShopEasy eCommerce website showing the hero section and initial product grid]**
+<img width="1918" height="1078" alt="v1" src="https://github.com/user-attachments/assets/582f8b51-55dd-47b8-9d47-07cc0f198c45" />
 
-> **[PLACEHOLDER: Screenshot – The V2 iteration of the website showing the new Enhanced Shopping Experience feature blocks]**
+> **The V1 iteration of the ShopEasy eCommerce website showing the hero section and initial product grid**
 
-> **[PLACEHOLDER: Screenshot – The V3 iteration showing the Order Tracking & User Accounts dashboard and Customer Reviews]**
+<img width="1918" height="1078" alt="Screenshot 2026-08-07 182202" src="https://github.com/user-attachments/assets/a1022322-4dbc-495e-a40a-9433ba5cf879" />
+
+> **The V2 iteration of the website showing the new Enhanced Shopping Experience feature blocks**
+
+<img width="1883" height="1041" alt="Screenshot 2026-09-18 135343" src="https://github.com/user-attachments/assets/4621d678-e79c-44c7-88d1-a543993dc121" />
+
+> **The V3 iteration showing the Order Tracking & User Accounts dashboard and Customer Reviews**
 
 ### 4. Cluster Observability
 
 Deep insights into cluster performance utilizing the `kube-prometheus-stack`.
 
-> **[PLACEHOLDER: Screenshot – MobaXterm terminal showing `kubectl get all` in the monitoring namespace with Prometheus and Grafana pods running]**
+<img width="1918" height="1078" alt="Screenshot 2026-08-08 005147" src="https://github.com/user-attachments/assets/9c9fe036-04c2-45a5-803b-5bbb7308515c" />
+> **MobaXterm terminal showing `kubectl get all` in the monitoring namespace with Prometheus and Grafana pods running**
 
-> **[PLACEHOLDER: Screenshot – Grafana UI dashboard displaying live CPU utilization, memory requests, and Kubernetes compute resources]**
+<img width="1918" height="1078" alt="Screenshot 2026-09-19 023014" src="https://github.com/user-attachments/assets/8ff559c3-fc4e-431e-977d-8aa4fb8b31bf" />
+> **Grafana UI dashboard displaying live CPU utilization, memory requests, and Kubernetes compute resources**
 
 ---
 
@@ -122,8 +141,8 @@ Initialize and apply the Terraform configuration to provision the VPC, EKS clust
 terraform init
 terraform apply --auto-approve
 ```
-
-> **[PLACEHOLDER: Screenshot – VS Code terminal output showing a successful 'terraform apply' execution and generated public IP outputs]**
+<img width="1770" height="1078" alt="Screenshot 2026-08-07 104116" src="https://github.com/user-attachments/assets/b4561f1c-0836-4f8b-b17c-25d7fabe5f4e" />
+> **VS Code terminal output showing a successful 'terraform apply' execution and generated public IP outputs**
 
 ### Step 2: Jenkins Configuration
 
@@ -143,7 +162,8 @@ kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}
 
 Extract the default admin password and access the UI via the generated LoadBalancer URL.
 
-> **[PLACEHOLDER: Screenshot – MobaXterm terminal showing the extraction of the argocd-initial-admin-secret password]**
+<img width="928" height="382" alt="Screenshot 2026-08-07 133058" src="https://github.com/user-attachments/assets/1f41316b-d1d3-4d1e-8a81-688b0f640a74" />
+> **MobaXterm terminal showing the extraction of the argocd-initial-admin-secret password**
 
 ### Step 4: Observability Stack
 
