@@ -8,6 +8,13 @@ This project establishes a production-grade GitOps CI/CD pipeline to automate th
 https://github.com/user-attachments/assets/94b63c3f-5bab-4298-98a8-49e98fadb4cc
 > **Video – Full video walkthrough demonstrating the live V3 application rollout, Jenkins CI pipeline execution, ArgoCD synchronization, and Grafana cluster observability**
 
+## 🏛️ Architecture Diagram
+
+<img width="1134" height="842" alt="gitops" src="https://github.com/user-attachments/assets/1aeead47-d179-4653-88af-eaedbc7831aa" />
+
+> **Architecture Diagram – End-to-end GitOps workflow showing Developer → GitHub (feature branches → main) → Jenkins CI (Build & Push to Docker Hub + Update K8s Manifest) → GitHub (updated manifest) → ArgoCD (Sync) → Amazon EKS Cluster (Rolling Update)**
+
+
 ## 🧰 Tech Stack
 
 | Layer | Technology |
