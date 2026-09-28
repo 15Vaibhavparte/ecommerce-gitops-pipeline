@@ -9,13 +9,16 @@ https://github.com/user-attachments/assets/94b63c3f-5bab-4298-98a8-49e98fadb4cc
 > **Video – Full video walkthrough demonstrating the live V3 application rollout, Jenkins CI pipeline execution, ArgoCD synchronization, and Grafana cluster observability**
 
 ## 🧰 Tech Stack
-* **Application Layer:** Python 3, Flask (`app.py`)   
-* **Infrastructure as Code (IaC):** Terraform (AWS EKS, EC2 provisioning)   
-* **Containerization:** Docker, Docker Hub   
-* **Continuous Integration (CI):** Jenkins (Multibranch Pipeline)   
-* **GitOps / CD:** ArgoCD   
-* **Container Orchestration:** Amazon Elastic Kubernetes Service (EKS)
-* **Observability:** Prometheus & Grafana (deployed via Helm)
+
+| Layer | Technology |
+|---|---|
+| **Application Layer** | Python 3, Flask (`app.py`) |
+| **Infrastructure as Code (IaC)** | Terraform (AWS EKS, EC2 provisioning) |
+| **Containerization** | Docker, Docker Hub |
+| **Continuous Integration (CI)** | Jenkins (Multibranch Pipeline) |
+| **GitOps / CD** | ArgoCD |
+| **Container Orchestration** | Amazon Elastic Kubernetes Service (EKS) |
+| **Observability** | Prometheus & Grafana (deployed via Helm) |
 
 ## 📖 Table of Contents
 
